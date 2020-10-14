@@ -16,7 +16,8 @@ class chatBanner extends React.Component {
   
       this.state = {
         fadeIn: '',
-        opacity:1
+        opacity:1,
+        v1: true
       };
     }
   
@@ -30,13 +31,19 @@ class chatBanner extends React.Component {
       console.log(window.scrollY)
 
       var opacityChange = 1 - (window.scrollY/100);
-      this.setState({opacity:opacityChange})
+      if(opacityChange < 0.14){
+        this.setState({opacity:opacityChange, v1: false})
+      } else {
+        this.setState({opacity:opacityChange, v1: true})
+      }
+      
     }
   
     render(){
-      return(
-        <Grid container direction={'row'} style={{paddingTop: 10, paddingBottom:20, overflow: 'hidden', backgroundColor:"black", height: this.props.height}}>
-          <Grid item lg={2} xl={2} md={2} sm={2} xs={2}>
+      if(this.state.v1){
+        return (
+          <Grid container direction={'row'} style={{paddingTop: 10, paddingBottom:20, overflow: 'hidden', backgroundColor:"black", height: this.props.height, }}>
+          <Grid item lg={2} xl={2} md={2} sm={2} xs={2}  style={{opacity: this.state.opacity}}>
           <Link style={{position:'absolute'}}  to="/home">
           <Button
                   color="white"
@@ -46,7 +53,7 @@ class chatBanner extends React.Component {
                 </Button>
                 </Link>
           </Grid>
-          <Grid item lg={10} xl={10} md={10} sm={10} xs={10}>
+          <Grid item lg={10} xl={10} md={10} sm={10} xs={10} style={{opacity: this.state.opacity}}>
             <Container style={{marginLeft:0, paddingLeft: 0}}>
               <Typography variant={"h6"} style={{color:"white",}}><b>Invstr</b></Typography>
               <Typography variant={"caption"} style={{color:"white", opacity:0.8}}>Questions about using Hitch? Check out Hitch Help Center for quick answers or send us a message. Live support is available Monday - Friday, 9 am-6 pm CST.</Typography>
@@ -66,7 +73,41 @@ class chatBanner extends React.Component {
             </Container>
           </Grid>
           </Grid>
-      )
+        )
+      } else {
+        console.log("ummm");
+        return(
+        
+        
+          <Grid container direction={'row'} style={{paddingTop: 10, paddingBottom:20, backgroundColor:"black", height: this.props.height, }}>
+          <Grid item lg={2} xl={2} md={2} sm={2} xs={2}  style={{marginTop: this.props.height - 55,}}>
+          <Link style={{position:'absolute'}}  to="/home">
+          <Button
+                  color="white"
+                  style={{textTransform:"none", borderRadius:25, alignSelf:'center'}}
+                >
+                  <ArrowBackIosIcon style={{color:"white"}}/>
+                </Button>
+                </Link>
+          </Grid>
+          <Grid item lg={10} xl={10} md={10} sm={10} xs={10} style={{marginTop: this.props.height - 55,}}>
+          <div style={{display:'flex', direction: 'row', alignItems: 'center', verticalAlign:'middle'}}>
+                <AvatarGroup  max={3}>
+                  <Avatar style={{borderColor:'black', height: 30, width: 30}} alt="Remy Sharp" src={dembe}/>
+                  <Avatar style={{borderColor:'black', height: 30, width: 30}} alt="Travis Howard" src={jen}/>
+                  <Avatar style={{borderColor:'black', height: 30, width: 30}} alt="Cindy Baker" src={kyle} />
+                </AvatarGroup>
+                <div>
+                <Typography variant={"caption"} style={{color:"white", opacity:0.8, paddingLeft: 10}}><b>Invstr</b></Typography>
+                <br/>
+                <Typography variant={"caption"} style={{color:"white", opacity:0.8, paddingLeft: 10}}>Tommorow</Typography>
+                
+                </div>
+              </div>
+          </Grid>
+          </Grid>
+        )
+      }
     }
 }
 

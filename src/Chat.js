@@ -70,7 +70,7 @@ export default class Chat extends React.Component{
 
     console.log(distanceY);
      if (distanceY >= 85) {
-        this.setState({height: 225-85, collapsed: true});
+        this.setState({height: 225-70, collapsed: true});
      } else {
         this.setState({height: 225 - distanceY, yDiff: distanceY, collapsed: false});
      }
