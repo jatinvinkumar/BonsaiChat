@@ -1,0 +1,14 @@
+.container1{
+    -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.container1::-webkit-scrollbar {display:none;}
+
+
+ #container2{
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    padding-right: 20px;
+}

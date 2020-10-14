@@ -17,6 +17,7 @@ import Paper from '@material-ui/core/Paper';
 import Banner from './Banner'
 import InputBase from '@material-ui/core/InputBase';
 import blogImage from './blogImage.png'
+import { Link } from 'react-router-dom';
 const steps = [
   {
     id: '0',
@@ -86,7 +87,11 @@ function Home() {
                   style={{textTransform:"none", borderRadius:25}}
                   startIcon={<MailIcon />}
                 >
+
+                <Link to="/chat" style={{textDecoration:'none', color: 'black'}}>
                   Send us a message
+                </Link>
+                 
                 </Button>
                 </Container>
               </div>
