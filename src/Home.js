@@ -11,8 +11,9 @@ import Blogs from './Blogs';
 function Home() {
   return(
     <div>
-      <Container style={{backgroundImage:`linear-gradient(135deg, rgb(0, 178, 137) 0%, rgb(0, 76, 58) 100%)`, position:'sticky', height:300, top:0, width:'100%', zIndex:8}}></Container>
-          <div style={{zIndex:10, top:0, backgroundColor:'white', marginTop:-300, paddingLeft:20, paddingRight:20}}>
+      <Container style={{backgroundImage:`linear-gradient(135deg, rgb(0, 178, 137) 0%, rgb(0, 76, 58) 100%)`, position:'sticky', height:300, top:0, width:'100%', zIndex:-1}}></Container>
+          
+          <div style={{zIndex:100, top:0, marginTop:-300, paddingLeft:20, paddingRight:20}}>
             <Banner/>
             {/* <ContinueConversation/> */}
             <CreateConversation/>
