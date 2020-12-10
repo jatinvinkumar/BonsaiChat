@@ -5,7 +5,7 @@ import "animate.css/animate.min.css";
 import Banner from './Banner'
 import ContinueConversation from './ContinueConversation';
 import CreateConversation from './CreateConversation';
-import SearchKB from './SearchKB';
+import SearchKB from './SearchKB'; 
 import Blogs from './Blogs';
 
 function Home() {
@@ -21,7 +21,7 @@ function Home() {
             <Blogs/>
           </div>
           <Container style={{width:'100%', height:30, display:'flex', alignItems:'center',  justifyContent:'space-around', backgroundColor:'white', position:'absolute', bottom:0, position:'sticky', boxShadow: "0px 0px 5px #9999"}}>
-            <Typography variant={"subtitle1"} style={{color:"black", fontSize:10, opacity:0.3}}>Powered by Bonsai</Typography>
+            <Typography variant={"subtitle1"} style={{color:"black", fontSize:10, opacity:0.3}}>Powered by Bonsai! </Typography>
           </Container>
     </div>
   )
