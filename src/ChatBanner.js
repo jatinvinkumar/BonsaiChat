@@ -42,7 +42,7 @@ class chatBanner extends React.Component {
     render(){
       if(this.state.v1){
         return (
-          <Grid container direction={'row'} style={{paddingTop: 10, paddingBottom:20, overflow: 'hidden', backgroundColor:"black", height: this.props.height, }}>
+          <Grid container direction={'row'} style={{paddingTop: 30, paddingBottom:30, overflow: 'hidden', backgroundImage: "linear-gradient(135deg, rgb(0, 178, 137) 0%, rgb(0, 76, 58) 100%)", height: this.props.height, }}>
           <Grid item lg={2} xl={2} md={2} sm={2} xs={2}  style={{opacity: this.state.opacity}}>
           <Link style={{position:'absolute'}}  to="/home">
           <Button
@@ -55,8 +55,8 @@ class chatBanner extends React.Component {
           </Grid>
           <Grid item lg={10} xl={10} md={10} sm={10} xs={10} style={{opacity: this.state.opacity}}>
             <Container style={{marginLeft:0, paddingLeft: 0}}>
-              <Typography variant={"h6"} style={{color:"white",}}><b>Invstr</b></Typography>
-              <Typography variant={"caption"} style={{color:"white", opacity:0.8}}>Questions about using Hitch? Check out Hitch Help Center for quick answers or send us a message. Live support is available Monday - Friday, 9 am-6 pm CST.</Typography>
+              <Typography variant={"h6"} style={{color:"white",}}><b>Bonsai</b></Typography>
+              <Typography variant={"caption"} style={{color:"white", opacity:1}}>Questions about using Hitch? Check out Hitch Help Center for quick answers or send us a message. Live support is available Monday - Friday, 9 am-6 pm CST.</Typography>
               <div style={{display:'flex', direction: 'row', paddingTop: 30}}>
                 <AvatarGroup  max={3}>
                   <Avatar style={{borderColor:'black'}} alt="Remy Sharp" src={dembe}/>

@@ -4,7 +4,7 @@ import './App.css';
 import Chat from './Chat';
 import Home from './Home';
 import firebase from 'firebase'
-
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,7 +12,12 @@ import {
   Link
 } from "react-router-dom";
 
-
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      'Open Sans',
+    ].join(','),
+  },});
 
 function App() {
 
@@ -32,7 +37,8 @@ function App() {
 
 
   return(
-    <Router >
+    <ThemeProvider theme={theme}>
+        <Router >
       <div>
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -49,6 +55,8 @@ function App() {
         </Switch>
       </div>
     </Router>
+    </ThemeProvider>
+    
   )
 }
 

@@ -6,7 +6,12 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
+    <>
+    <header>
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"/>
+    </header>
     <App />
+    </>
   </React.StrictMode>,
   document.getElementById('root')
 );

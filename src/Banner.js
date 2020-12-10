@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Typography } from '@material-ui/core';
-import logo from './invstr-logo.png';
+import logo from './White+Gray.png';
 class Banner extends React.Component {
 
     constructor(props) {
@@ -19,7 +19,6 @@ class Banner extends React.Component {
       this.scrollHandler();
     }
 
-  
     scrollHandler() {
       console.log(window.scrollY)
 
@@ -29,10 +28,10 @@ class Banner extends React.Component {
   
     render(){
       return(
-        <Container style={{paddingTop: 10, paddingBottom:20, opacity: this.state.opacity}}>
-            <img src={logo} style={{height:50}}/>
-            <Typography variant={"h6"} style={{color:"white",}}><b>Hey There </b> 👋</Typography>
-            <Typography variant={"body"} style={{color:"white", opacity:0.8}}>Every year, there are billions of empty car seats going between cities, leading to congestion and pollution.</Typography>
+        <Container style={{marginTop: 30, paddingBottom:20, opacity: this.state.opacity}}>
+            <img src={logo} style={{height:40}}/>
+            <Typography variant={"h6"} style={{color:"white", fontSize: 30, marginTop:10, marginBottom: 10}}>Howdy 👋</Typography>
+            <Typography variant={"subtitle2"} style={{color:"white", opacity:0.9, marginBottom: 10}}>Every year, there are billions of empty car seats going between cities, leading to congestion and pollution.</Typography>
           </Container>
       )
     }
