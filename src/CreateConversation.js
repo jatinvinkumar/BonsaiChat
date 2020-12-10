@@ -1,6 +1,9 @@
 import React from 'react';
 import './App.css';
 import propic1 from './propic.jpg';
+import dembe from './profilePictures/dembe.jpg'
+import jen from './profilePictures/jen.jpg'
+import kyle from './profilePictures/kyle.jpg'
 import { Typography, Container, Avatar, Button, Grid, Icon, TextField, IconButton } from '@material-ui/core';
 import { AvatarGroup } from '@material-ui/lab';
 import MailIcon from '@material-ui/icons/Mail';
@@ -18,8 +21,8 @@ export default class CreateConversation extends React.Component{
             <Grid container>
               <Grid item sm={4} xs={4}>
                 <AvatarGroup max={2} style={{paddingBottom:10}}>
-                  <Avatar alt="Remy Sharp" src={propic1} />
-                  <Avatar alt="Travis Howard" src={propic1} />
+                  <Avatar alt="Remy Sharp" src={dembe} />
+                  <Avatar alt="Travis Howard" src={jen} />
                 </AvatarGroup>
               </Grid>
               <Grid item sm={8} xs={8}>

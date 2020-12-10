@@ -31,7 +31,8 @@ class Banner extends React.Component {
         <Container style={{marginTop: 30, paddingBottom:20, opacity: this.state.opacity}}>
             <img src={logo} style={{height:40}}/>
             <Typography variant={"h6"} style={{color:"white", fontSize: 30, marginTop:10, marginBottom: 10}}>Howdy 👋</Typography>
-            <Typography variant={"subtitle2"} style={{color:"white", opacity:0.9, marginBottom: 10}}>Every year, there are billions of empty car seats going between cities, leading to congestion and pollution.</Typography>
+            <Typography variant={"subtitle2"} style={{color:"white", opacity:0.9, marginBottom: 10}}>Use AI and RPA to automate complex processes that are time-intensive and repetitive
+</Typography>
           </Container>
       )
     }
