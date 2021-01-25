@@ -10,8 +10,7 @@ import {RemoveScrollBar} from 'react-remove-scroll-bar';
 import { connect } from 'react-redux'
 
 import { Widget, addResponseMessage, toggleWidget, dropMessages } from 'react-chat-widget';
-import 'react-chat-widget/lib/styles.css';
-import styles from './Chat.css'; 
+import './Chat.css'; 
 
 var stateData;
 var chatID;
@@ -69,6 +68,7 @@ function ChatSection(props){
   
 }
 
+//Recieve data from state
 const mapStateToProps = (state, ownProps) => {
   //let id = ownProps.match.params.post_id;
   
@@ -77,6 +77,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
+//To Send actions to state
 const mapDispatchToProps = (dispatch) => {
   return {
     //deletePost: (id) => dispatch(deletePost(id))
