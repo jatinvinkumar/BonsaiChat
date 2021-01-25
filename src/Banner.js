@@ -30,8 +30,8 @@ class Banner extends React.Component {
       return(
         <Container style={{marginTop: 30, paddingBottom:20, opacity: this.state.opacity}}>
             <img src={logo} style={{height:40}}/>
-            <Typography variant={"h6"} style={{color:"white", fontSize: 30, marginTop:10, marginBottom: 10}}>Howdy 👋</Typography>
-            <Typography variant={"subtitle2"} style={{color:"white", opacity:0.9, marginBottom: 10}}>Use AI and RPA to automate complex processes that are time-intensive and repetitive</Typography>
+            <Typography variant={"h6"} style={{color:"white", fontSize: 30, marginTop:10, marginBottom: 10}}>{this.props.state.headerHome}</Typography>
+            <Typography variant={"subtitle2"} style={{color:"white", opacity:0.9, marginBottom: 10}}>{this.props.state.headerDesc}</Typography>
           </Container>
       )
     }

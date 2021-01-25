@@ -1,16 +1,18 @@
 
-import React, {useEffect  } from 'react';
+import React, {useEffect, useContext, useSelector  } from 'react';
 import './App.css';
 import Chat from './Chat';
 import Home from './Home';
-import firebase from 'firebase'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
+import StartMessages from './StartMessages';
+import { Provider } from 'react-redux'
+import { FirebaseContext } from './firebase/firebase';
+import Loader from './Loader';
 
 const theme = createMuiTheme({
   typography: {
@@ -19,44 +21,37 @@ const theme = createMuiTheme({
     ].join(','),
   },});
 
-function App() {
+function App(props) {
 
-  useEffect(() => {
-    var firebaseConfig = {
-      apiKey: "AIzaSyDzr-TJy0u9P-4ptFo98D0CiPmKh6F_JNc",
-      authDomain: "bonsai-650c6.firebaseapp.com",
-      databaseURL: "https://bonsai-650c6.firebaseio.com",
-      projectId: "bonsai-650c6",
-      storageBucket: "bonsai-650c6.appspot.com",
-      messagingSenderId: "612219669058",
-      appId: "1:612219669058:web:375f6e15ccb6dac2f7bbdb",
-      measurementId: "G-MT2F6H7FSC"
-    };
-    firebase.initializeApp(firebaseConfig)
-  }, []); // passing an empty array as second argument triggers the callback in useEffect only after the initial render thus replicating `componentDidMount` lifecycle behaviour
+  const { app, api } = useContext(FirebaseContext);
+    // you can access todos from the Redux store
 
+    useEffect(( ) => {
+        }, [])
 
   return(
-    <ThemeProvider theme={theme}>
-        <Router >
-      <div>
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/home">
-            <Home />
-          </Route>
-          <Route path="/chat">
-            <Chat />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-    </ThemeProvider>
-    
+        <ThemeProvider theme={theme}>
+          <Router >
+            <div>
+              <Switch>
+                <Route path="/home">
+                  <Home />
+                </Route>
+                <Route path="/initiate">
+                  <StartMessages />
+                </Route>
+                <Route path="/chat/:id" render={(props) => (
+                  <Chat key={props.match.params.id} {...props} />)
+                } />
+                
+                <Route path="/loader/:id" component={Loader}/> 
+                <Route path="/">
+                  <Home />
+                </Route>
+              </Switch>
+            </div>
+          </Router>
+        </ThemeProvider>
   )
 }
 

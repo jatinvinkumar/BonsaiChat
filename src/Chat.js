@@ -12,6 +12,7 @@ import firebase from 'firebase'
 import ChatSection from './ChatSection';
 import ChatContactInfo from './ChatContactInfo';
 
+
 var isScrolling;
 
 export default class Chat extends React.Component{
@@ -21,8 +22,14 @@ export default class Chat extends React.Component{
   }
   
   componentDidMount() {
-    window.addEventListener("scroll", this.resizeHeaderOnScroll.bind(this));
+    //window.addEventListener("scroll", this.resizeHeaderOnScroll.bind(this));
+    
   }
+
+  componentWillReceiveProps(newProps){
+    this.setState({i: newProps.match.params.id})
+  }
+  
   
   resizeHeaderOnScroll() {
     
@@ -40,8 +47,8 @@ export default class Chat extends React.Component{
       return(
         <div className="container1">
               <ChatBanner id="header" height={this.state.height} style={{backgroundColor:"black",}} />
-              <ChatContactInfo height={(window.innerHeight - this.state.height - 50) + this.state.yDiff}/>
-              {/* <ChatSection height={(window.innerHeight - this.state.height - 50) + this.state.yDiff}/> */}
+              {/* <ChatContactInfo height={(window.innerHeight - this.state.height - 50) + this.state.yDiff}/> */}
+              <ChatSection id={this.props.match.params.id} height={(window.innerHeight - this.state.height - 50) + this.state.yDiff}/>
         </div>
       )
   }

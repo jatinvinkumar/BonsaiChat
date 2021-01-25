@@ -7,15 +7,33 @@ import ContinueConversation from './ContinueConversation';
 import CreateConversation from './CreateConversation';
 import SearchKB from './SearchKB'; 
 import Blogs from './Blogs';
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom';
 
-function Home() {
+
+function ConversationsExists(props){
+  if(props.state.conversationIDS.length > 0){
+    console.log("welp", props.state);
+    return(
+      <ContinueConversation state={props.state}/> 
+      //<Redirect to={"/chat/" + props.state.conversationIDS[0]} />
+    )
+  } else {
+    return (
+      <div></div>
+    )
+  }
+}
+
+function Home(props) {
+  console.log("beepBeeps");
+  console.log(props);
   return(
     <div>
       <Container style={{backgroundImage:`linear-gradient(135deg, rgb(0, 178, 137) 0%, rgb(0, 76, 58) 100%)`, position:'sticky', height:300, top:0, width:'100%', zIndex:-1}}></Container>
-          
           <div style={{zIndex:10, top:0, marginTop:-300, paddingLeft:20, paddingRight:20}}>
-            <Banner/>
-            {/* <ContinueConversation/> */}
+            <Banner state={props.post}/>
+            <ConversationsExists state={props.post}/>
             <CreateConversation/>
             <SearchKB/>
             <Blogs/>
@@ -27,4 +45,17 @@ function Home() {
   )
 }
 
-export default Home;
+const mapStateToProps = (state, ownProps) => {
+  //let id = ownProps.match.params.post_id;
+  return {
+    post: state
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    //deletePost: (id) => dispatch(deletePost(id))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
