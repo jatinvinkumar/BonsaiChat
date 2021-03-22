@@ -6,7 +6,7 @@ import firebaseConfig from './firebaseConfig';
 import app from 'firebase/app'
 import 'firebase/database';
 import { useDispatch } from 'react-redux';
-import { updateSession, updateConversationIDS, updateConversation, updateClientMeta } from '../actions/Actions'
+import { updateSession, updateConversationIDS, updateConversation, updateClientMeta, updateSessionMeta } from '../actions/Actions'
 
 
 // we create a React Context, for this to be accessible
@@ -37,9 +37,9 @@ export default ({ children }) => {
             api: {
                 initConversationListener,
                 initSession,
-                getTodos,
                 addMessage,
-                createConversation
+                createConversation,
+                setMetaData,
             }
         }
     }
@@ -50,12 +50,12 @@ export default ({ children }) => {
         session_id = id;
         firebase.database.ref('sessions/' + id).once('value', (snapshot) => {
             const vals = snapshot.val();
-
-            
+            dispatch(updateSession(id))
             console.log("Sup bits: ", vals)
             // dispatch Redux action that would update the store
             client_id = vals.clientID;
             getClientMeta(vals.clientID)
+
             
         })
 
@@ -133,6 +133,15 @@ export default ({ children }) => {
         })
     }
 
+    function setMetaData(data){
+        var updates = {};
+        updates['sessions/' + session_id + '/meta'] = data;
+        firebase.database.ref().update(updates).then((snapshot) => {
+            console.log("sucessfuly added session meta")
+            dispatch(updateSessionMeta(data))
+        })
+    }
+
     function initConversationListener(id){
         firebase.database.ref('conversations/' + id + '/history').on('child_added', (snapshot) => {
             const vals = snapshot.val();
@@ -144,23 +153,7 @@ export default ({ children }) => {
         })
     }
 
-    // function to query Todos from the database and 
-    // fire a Redux action to update the items in real-time
-    function getTodos(){
-        firebase.database.ref('sessions').on('value', (snapshot) => {
-            const vals = snapshot.val();
-            let _records = [];
-            for(var key in vals){
-                _records.push({
-                    ...vals[key],
-                    id: key
-                });
-            }
-            // setTodos is a Redux action that would update the todo store
-            // to the _records payload
-            dispatch(updateSession(_records));
-        })
-    }
+
 
     return (
         <FirebaseContext.Provider value={firebase}>

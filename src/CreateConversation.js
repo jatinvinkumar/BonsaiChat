@@ -19,14 +19,18 @@ export default function CreateConversation(props) {
   const { app, api } = useContext(FirebaseContext);
   const history = useHistory();
   const newConvo = async () => {
-    await api.createConversation().then(key => {
-      console.log("Key Returned: ", key );
-      history.push("/chat/" + key);
-      //history.push("/newlead/" + key);
-    });
+
+    if(!props.data.sessionMeta.email){
+      history.push("/chat/" + props.data.conversationIDS[0]);
+    } else {
+      await api.createConversation().then(key => {
+        console.log("Key Returned: ", key );
+        history.push("/chat/" + key);
+        //history.push("/newlead/" + key);
+      });
+    }
     
   }
-  
         return(
             <Utility>
             <Typography variant={"subtitle1"} style={{color:"black", paddingBottom:10}}><b>Start a conversation</b></Typography>
@@ -40,7 +44,7 @@ export default function CreateConversation(props) {
               <Grid item sm={8} xs={8}>
               <Typography variant={"subtitle2"} style={{color:"black", opacity:0.8, paddingBottom:5}}>Talk to us now!</Typography>
               <div style={{display:'flex'}}>
-                <AccessTimeIcon style={{fontSize:20, color: props.state.themeColor}}/>
+                <AccessTimeIcon style={{fontSize:20, color: props.data.themeColor}}/>
                 <Typography variant={"subtitle2"} style={{color:"black", fontSize:12, paddingBottom:20, paddingLeft: 5}}>Replies within 2 min</Typography>
               </div>
               </Grid>
@@ -48,7 +52,7 @@ export default function CreateConversation(props) {
             <Button
               variant=""
               color="#00A07C"
-              style={{textTransform:"none", borderRadius:25, backgroundColor: props.state.themeColor, textDecoration:'none', color: 'white'}}
+              style={{textTransform:"none", borderRadius:25, backgroundColor: props.data.themeColor, textDecoration:'none', color: 'white'}}
               startIcon={<MailIcon style={{color: 'white'}}/>}
               onClick={newConvo}
             >

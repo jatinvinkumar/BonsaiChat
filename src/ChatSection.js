@@ -7,7 +7,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import { ArrowForwardIos, AttachFileTwoTone, EmojiEmotionsTwoTone, FreeBreakfastOutlined, Info } from '@material-ui/icons';
 import { Button, Container, IconButton, Input, InputBase, Paper, Typography } from '@material-ui/core';
 import {RemoveScrollBar} from 'react-remove-scroll-bar';
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 
 import { FirebaseContext } from "./firebase/firebase";
 
@@ -70,7 +70,7 @@ function validate(email) {
   return false;
 }
 
-
+var email = "";
 
 function ChatSection(props){
 
@@ -80,8 +80,9 @@ function ChatSection(props){
   }
 
   const { app, api } = useContext(FirebaseContext);
+  const dispatch = useDispatch();
 
-  const [email, setEmail] = useState(0);
+  const [email2, setEmail] = useState("");
 
   const inputChange = (event) => {
     //setInput(event.target.value)
@@ -100,13 +101,17 @@ function ChatSection(props){
     // Now send the message throught the backend API
   };
 
-  const handleChangeEmail = () => {
-    
+  const handleChangeEmail = (event) => {
+    console.log("EVENTLOG: ", event.target.value)
+    email = event.target.value;
   }
 
   const handleEmailSubmit = () => {
+    console.log("submit pressed");
     if(validate(email)){
-
+      console.log("email validated");
+      api.setMetaData({email: email});
+      setEmail(email)
     }
   }
 
@@ -116,15 +121,15 @@ function ChatSection(props){
       <Typography variant={"subtitle1"} style={{color:"black", paddingBottom:10}}><b>Stay in touch</b></Typography>
                 <div style={{display:'flex'}}>
                   <Paper component="form" style={{ boxShadow: "0px 0px 1px #9999", width:'100%', borderTopRightRadius:0, borderBottomRightRadius:0}}>
-                    <InputBase
+                    <Input
                       placeholder="Enter Email"
                       inputProps={{ 'aria-label': 'search google maps' }}
-                      
+                      onChange={handleChangeEmail}
                       style={{paddingLeft:10, width:'100%', textAnchor:'middle', alignItems:'center', textAlign:'center', paddingTop:5}}
                     />
                   </Paper>
 
-                  <IconButton onClick={handleEmailSubmit()} style={{height:'100%', backgroundColor:"black", height:40, width:40, borderRadius:0, borderTopRightRadius:5, borderBottomRightRadius:5}} type="submit" aria-label="search">
+                  <IconButton onClick={handleEmailSubmit} style={{height:'100%', backgroundColor:"black", height:40, width:40, borderRadius:0, borderTopRightRadius:5, borderBottomRightRadius:5}} type="submit" aria-label="search">
                       <ArrowForwardIos style={{color:'white', margin:'auto'}}/>
                   </IconButton>
                 </div>
@@ -134,11 +139,11 @@ function ChatSection(props){
   stateData = props.data;
   dropMessages()
   pointer = 0;
-  if(!props.data.sessionID){
-    //renderCustomComponent(Button2)
-    loopThru(props);
+  console.log("PropsCC: ", props)
+  if(!props.data.sessionMeta.email){
+    renderCustomComponent(Button2)
   } else {
-    
+    loopThru(props);
   }
   
   

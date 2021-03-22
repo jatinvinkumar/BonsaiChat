@@ -1,7 +1,8 @@
 const initState = {
     sessionID: "",
     conversations: {},
-    conversationIDS: []
+    conversationIDS: [],
+    sessionMeta: []
   }
   
   const rootReducer = (state = initState, action) => {
@@ -9,7 +10,7 @@ const initState = {
     if(action.type === 'UPDATE_SESSION'){
      return {
        ...state,
-       session: action
+       sessionID: action.id
      }
     } else if(action.type === 'UPDATE_CONVERSATION_IDS'){
         return {
@@ -44,6 +45,12 @@ const initState = {
             starterConvo: action.starterConvo,
             logo: action.logo, 
             themeColor: action.color
+        }
+    } else if (action.type === 'UPDATE_SESSION_META'){
+        console.log("SessionMeta: ", action)
+        return {
+            ...state,
+            sessionMeta : action.data
         }
     }
     return state;

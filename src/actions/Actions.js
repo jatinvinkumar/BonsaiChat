@@ -1,7 +1,7 @@
 export const updateSession = (id) => {
     return {
       type: 'UPDATE_SESSION',
-      id
+      id: id
     }
   }
 
@@ -28,5 +28,12 @@ export const updateSession = (id) => {
       starterConvo: starter,
       logo: logo, 
       color: color
+    }
+  }
+
+  export const updateSessionMeta = (data) => {
+    return {
+      type: 'UPDATE_SESSION_META',
+      data: data
     }
   }

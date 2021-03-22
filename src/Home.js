@@ -33,7 +33,7 @@ function Home(props) {
           <div style={{zIndex:10, top:0, marginTop:-300, paddingLeft:20, paddingRight:20}}>
             <Banner logo={props.post.logo} state={props.post}/>
             <ConversationsExists state={props.post}/>
-            <CreateConversation state={props.post}/>
+            <CreateConversation data={props.post}/>
             {/* <SearchKB state={props.post}/>
             <Blogs/> */}
           </div>
