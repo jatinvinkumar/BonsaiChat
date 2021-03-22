@@ -27,7 +27,7 @@ export default class SearchKB extends React.Component{
                       style={{paddingLeft:10, width:'100%', textAnchor:'middle', alignItems:'center', textAlign:'center', paddingTop:5}}
                     />
                   </Paper>
-                  <IconButton style={{height:'100%', backgroundColor:'#00A07C', height:40, width:40, borderRadius:0, borderTopRightRadius:5, borderBottomRightRadius:5}} type="submit" aria-label="search">
+                  <IconButton style={{height:'100%', backgroundColor: this.props.state.themeColor, height:40, width:40, borderRadius:0, borderTopRightRadius:5, borderBottomRightRadius:5}} type="submit" aria-label="search">
                       <ArrowForwardIosIcon style={{color:'white', margin:'auto'}}/>
                   </IconButton>
                 </div>

@@ -46,9 +46,9 @@ export default class Chat extends React.Component{
   render(){
       return(
         <div className="container1">
-              <ChatBanner id="header" height={this.state.height} style={{backgroundColor:"black",}} />
+              <ChatBanner id="header" height={80} style={{backgroundColor:"black",}} />
               {/* <ChatContactInfo height={(window.innerHeight - this.state.height - 50) + this.state.yDiff}/> */}
-              <ChatSection id={this.props.match.params.id} height={(window.innerHeight - this.state.height - 50) + this.state.yDiff}/>
+              <ChatSection id={this.props.match.params.id} height={(window.innerHeight - 80)}/>
         </div>
       )
   }

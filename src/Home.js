@@ -26,17 +26,16 @@ function ConversationsExists(props){
 }
 
 function Home(props) {
-  console.log("beepBeeps");
-  console.log(props);
+  console.log("beepBeeps", props);
   return(
     <div>
-      <Container style={{backgroundImage:`linear-gradient(135deg, rgb(0, 178, 137) 0%, rgb(0, 76, 58) 100%)`, position:'sticky', height:300, top:0, width:'100%', zIndex:-1}}></Container>
+      <Container style={{backgroundColor: props.post.themeColor, position:'sticky', height:300, top:0, width:'100%', zIndex:-1}}></Container>
           <div style={{zIndex:10, top:0, marginTop:-300, paddingLeft:20, paddingRight:20}}>
-            <Banner state={props.post}/>
+            <Banner logo={props.post.logo} state={props.post}/>
             <ConversationsExists state={props.post}/>
-            <CreateConversation/>
-            <SearchKB/>
-            <Blogs/>
+            <CreateConversation state={props.post}/>
+            {/* <SearchKB state={props.post}/>
+            <Blogs/> */}
           </div>
           <Container style={{width:'100%', height:30, display:'flex', alignItems:'center',  justifyContent:'space-around', backgroundColor:'white', position:'absolute', bottom:0, position:'sticky', boxShadow: "0px 0px 5px #9999"}}>
             <Typography variant={"subtitle1"} style={{color:"black", fontSize:10, opacity:0.3}}>Powered by Bonsai! </Typography>

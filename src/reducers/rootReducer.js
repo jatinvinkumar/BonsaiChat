@@ -36,11 +36,14 @@ const initState = {
         }
     
     } else if (action.type === 'UPDATE_CLIENT_META'){
+        console.log("clientData: ", action)
         return {
             ...state,
             headerDesc: action.headerDesc,
             headerHome: action.headerHome,
-            logo: action.logo
+            starterConvo: action.starterConvo,
+            logo: action.logo, 
+            themeColor: action.color
         }
     }
     return state;

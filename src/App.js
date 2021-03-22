@@ -13,6 +13,8 @@ import StartMessages from './StartMessages';
 import { Provider } from 'react-redux'
 import { FirebaseContext } from './firebase/firebase';
 import Loader from './Loader';
+import GhostChat from './GhostChat';
+import ChatContactInfo from './ChatContactInfo';
 
 const theme = createMuiTheme({
   typography: {
@@ -37,13 +39,18 @@ function App(props) {
                 <Route path="/home">
                   <Home />
                 </Route>
+                <Route path="/newlead">
+                  <ChatContactInfo />
+                </Route>
                 <Route path="/initiate">
                   <StartMessages />
                 </Route>
                 <Route path="/chat/:id" render={(props) => (
                   <Chat key={props.match.params.id} {...props} />)
                 } />
-                
+                <Route path="/ghostchat/:id" render={(props) => (
+                  <GhostChat key={props.match.params.id} {...props} />)
+                } />
                 <Route path="/loader/:id" component={Loader}/> 
                 <Route path="/">
                   <Home />

@@ -20,11 +20,13 @@ export const updateSession = (id) => {
     }
   }
 
-  export const updateClientMeta = (headerHome, headerDesc, logo) => {
+  export const updateClientMeta = (headerHome, headerDesc, starter, logo, color) => {
     return {
       type: 'UPDATE_CLIENT_META',
       headerHome: headerHome,
       headerDesc: headerDesc,
-      logo: logo
+      starterConvo: starter,
+      logo: logo, 
+      color: color
     }
   }

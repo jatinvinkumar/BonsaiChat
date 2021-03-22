@@ -40,7 +40,8 @@ class chatBanner extends React.Component {
     }
   
     render(){
-      if(this.state.v1){
+      // if(this.state.v1){
+        if(false){
         return (
           <Grid container direction={'row'} style={{paddingTop: 30, paddingBottom:30, overflow: 'hidden', backgroundImage: "linear-gradient(135deg, rgb(0, 178, 137) 0%, rgb(0, 76, 58) 100%)", height: this.props.height, }}>
           <Grid item lg={2} xl={2} md={2} sm={2} xs={2}  style={{opacity: this.state.opacity}}>
@@ -75,11 +76,10 @@ class chatBanner extends React.Component {
           </Grid>
         )
       } else {
-        console.log("ummm");
         return(
         
         
-          <Grid container direction={'row'} style={{paddingTop: 10, paddingBottom:20, backgroundColor:"black", height: this.props.height, }}>
+          <Grid container direction={'row'} style={{paddingTop: 10, paddingBottom:20, backgroundColor:"black", height: 80, }}>
           <Grid item lg={2} xl={2} md={2} sm={2} xs={2}  style={{marginTop: this.props.height - 55,}}>
           <Link style={{position:'absolute'}}  to="/home">
           <Button

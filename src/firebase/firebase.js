@@ -14,6 +14,10 @@ import { updateSession, updateConversationIDS, updateConversation, updateClientM
 const FirebaseContext = createContext(null)
 export { FirebaseContext }
 
+var start_conversation;
+var client_id;
+var session_id;
+
 export default ({ children }) => {
     let firebase = {
         app: null,
@@ -33,37 +37,99 @@ export default ({ children }) => {
             api: {
                 initConversationListener,
                 initSession,
-                getTodos
+                getTodos,
+                addMessage,
+                createConversation
             }
         }
     }
-
+    var con;
     //Start a listener to check for any new conversations 
     function initSession(id){
         //Check & attatch conversation Listeners for new convos
-        firebase.database.ref('sessions/' + id + "/conversations").on('child_added', (snapshot) => {
+        session_id = id;
+        firebase.database.ref('sessions/' + id).once('value', (snapshot) => {
             const vals = snapshot.val();
-            if (Array.isArray(vals)){
-                vals.forEach(convoID => {
-                    initConversationListener(convoID)
-                });
-            } else {
-                initConversationListener(vals)
-            }
-            console.log("Sup bits: " + vals)
+
+            
+            console.log("Sup bits: ", vals)
             // dispatch Redux action that would update the store
-            getClientMeta(id)
-            dispatch(updateConversationIDS(vals));
+            client_id = vals.clientID;
+            getClientMeta(vals.clientID)
             
         })
+
+        firebase.database.ref('sessions/' + id + '/conversations').on('child_added', (snapshot) => {
+            const vals = snapshot.val();
+
+            if (Array.isArray(vals)){
+                vals.conversations.forEach(convoID => {
+                    console.log("lookieHere", convoID);
+                    initConversationListener(convoID)
+                });
+            }
+
+
+            console.log("convoAdded: Firebase")
+            console.log(vals);
+            // dispatch Redux action that would update the store
+            initConversationListener(vals)
+            dispatch(updateConversationIDS(vals));
+        })
+    }
+
+    async function createConversation(){
+        var newConversationKey = firebase.database.ref().child('conversations/').push().key;
+        firebase.database.ref('conversations/' + newConversationKey).set({
+            sessionID: session_id,
+            history: start_conversation,
+            clientID: client_id
+          }).then((snapshot) => {
+            console.log("New COnversation Created", session_id);
+            firebase.database.ref('sessions/' + session_id + '/conversations').push(
+                newConversationKey
+            )
+            
+          })  
+          return newConversationKey;
+    }
+
+    function addMessage(pointer, id, message){
+        //var newPostKey = firebase.database().ref().child('posts').push().key;
+
+        var newPostKey = firebase.database.ref().child('conversations/' + id + '/history').push().key;
+
+        var selectedDate = new Date();
+        var currentDate = selectedDate;
+        var currentTime = currentDate.getTime();
+        var localOffset = (-1) * selectedDate.getTimezoneOffset() * 60000;
+        var stamp = Math.round(new Date(currentTime + localOffset).getTime() / 1000);
+
+        console.log("fb: ", stamp)
+        var updates = {};
+        var postData = {
+            data: message,
+            type: "message",
+            sender: "user",
+            timestamp: stamp
+          };
+        updates['conversations/' + id + '/history/' + newPostKey] = postData;
+        return firebase.database.ref().update(updates);
     }
 
     //Gets once the metaData of the 
     function getClientMeta(id){
-        firebase.database.ref('sessions/' + id).once('value').then((snapshot) => {
+        firebase.database.ref('clients/' + id).once('value').then((snapshot) => {
             const vals = snapshot.val();
             // dispatch Redux action that would update the store
-            dispatch(updateClientMeta(vals.HeaderHome, vals.HeaderDesc, vals.logo))
+            console.log("clientFirebase: ", vals)
+            firebase.database.ref('startConvo/' + vals.startConvo).once('value').then((snapshot) => {
+                console.log("StarterCOnversationDATA: ", snapshot.val())
+                const starterConvo = snapshot.val();
+                start_conversation = starterConvo;
+                dispatch(updateClientMeta(vals.HeaderHome, vals.HeaderDesc, starterConvo, vals.logo, vals.themeColor))
+            })
+            
         })
     }
 

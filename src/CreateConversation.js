@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import './App.css';
 import propic1 from './propic.jpg';
 import dembe from './profilePictures/dembe.jpg'
@@ -9,12 +9,24 @@ import { AvatarGroup } from '@material-ui/lab';
 import MailIcon from '@material-ui/icons/Mail';
 import "animate.css/animate.min.css";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import { Link } from 'react-router-dom';
+import { Link, Route, Router, useHistory } from 'react-router-dom';
 import Utility from './Utility';
+import { connect } from 'react-redux'
+import { FirebaseContext } from "./firebase/firebase";
 
+export default function CreateConversation(props) {
 
-export default class CreateConversation extends React.Component{
-    render(){
+  const { app, api } = useContext(FirebaseContext);
+  const history = useHistory();
+  const newConvo = async () => {
+    await api.createConversation().then(key => {
+      console.log("Key Returned: ", key );
+      history.push("/chat/" + key);
+      //history.push("/newlead/" + key);
+    });
+    
+  }
+  
         return(
             <Utility>
             <Typography variant={"subtitle1"} style={{color:"black", paddingBottom:10}}><b>Start a conversation</b></Typography>
@@ -28,7 +40,7 @@ export default class CreateConversation extends React.Component{
               <Grid item sm={8} xs={8}>
               <Typography variant={"subtitle2"} style={{color:"black", opacity:0.8, paddingBottom:5}}>Talk to us now!</Typography>
               <div style={{display:'flex'}}>
-                <AccessTimeIcon style={{fontSize:20, color: "#00A07C"}}/>
+                <AccessTimeIcon style={{fontSize:20, color: props.state.themeColor}}/>
                 <Typography variant={"subtitle2"} style={{color:"black", fontSize:12, paddingBottom:20, paddingLeft: 5}}>Replies within 2 min</Typography>
               </div>
               </Grid>
@@ -36,16 +48,15 @@ export default class CreateConversation extends React.Component{
             <Button
               variant=""
               color="#00A07C"
-              style={{textTransform:"none", borderRadius:25, backgroundColor:'#00A07C'}}
+              style={{textTransform:"none", borderRadius:25, backgroundColor: props.state.themeColor, textDecoration:'none', color: 'white'}}
               startIcon={<MailIcon style={{color: 'white'}}/>}
+              onClick={newConvo}
             >
-            <Link to="/chat" style={{textDecoration:'none', color: 'white'}}>
+            {/* <Link to="/chat" style={{textDecoration:'none', color: 'white'}}>
+              
+            </Link> */}
               Send us a message
-            </Link>
-             
             </Button>
             </Utility>
         )
-        
-    }
 }
