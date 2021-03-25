@@ -133,13 +133,18 @@ export default ({ children }) => {
         })
     }
 
-    function setMetaData(data){
+    function setMetaData(chatID, data){
         var updates = {};
-        updates['sessions/' + session_id + '/meta'] = data;
+        var dataKey = Object.keys(data)
+        console.log("addingToFB:", dataKey, data.dataKey);
+
+        updates['sessions/' + session_id + '/meta/' + dataKey] = data[dataKey];
+        updates['conversations/' + chatID + '/meta/' + dataKey] = data[dataKey];
         firebase.database.ref().update(updates).then((snapshot) => {
             console.log("sucessfuly added session meta")
             dispatch(updateSessionMeta(data))
         })
+        
     }
 
     function initConversationListener(id){

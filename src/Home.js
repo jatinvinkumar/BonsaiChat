@@ -12,7 +12,7 @@ import { Redirect } from 'react-router-dom';
 
 
 function ConversationsExists(props){
-  if(props.state.conversationIDS.length > 0){
+  if(props.state.conversationIDS.length > 0  && props.state.sessionMeta.email != null){
     console.log("welp", props.state);
     return(
       <ContinueConversation state={props.state}/> 
@@ -28,18 +28,18 @@ function ConversationsExists(props){
 function Home(props) {
   console.log("beepBeeps", props);
   return(
-    <div>
-      <Container style={{backgroundColor: props.post.themeColor, position:'sticky', height:300, top:0, width:'100%', zIndex:-1}}></Container>
-          <div style={{zIndex:10, top:0, marginTop:-300, paddingLeft:20, paddingRight:20}}>
-            <Banner logo={props.post.logo} state={props.post}/>
-            <ConversationsExists state={props.post}/>
-            <CreateConversation data={props.post}/>
-            {/* <SearchKB state={props.post}/>
-            <Blogs/> */}
-          </div>
-          <Container style={{width:'100%', height:30, display:'flex', alignItems:'center',  justifyContent:'space-around', backgroundColor:'white', position:'absolute', bottom:0, position:'sticky', boxShadow: "0px 0px 5px #9999"}}>
-            <Typography variant={"subtitle1"} style={{color:"black", fontSize:10, opacity:0.3}}>Powered by Bonsai! </Typography>
-          </Container>
+    <div style={{height: "600px"}}>
+      <Container style={{backgroundColor: props.post.themeColor, position:'sticky', height:300, top:0, width:'100%', zIndex:-1}}/>
+      <div style={{zIndex:10, top:0, marginTop:-300, paddingLeft:20, paddingRight:20}}>
+        <Banner logo={props.post.logo} state={props.post}/>
+        <ConversationsExists state={props.post}/>
+        <CreateConversation data={props.post}/>
+        <SearchKB data={props.post}/>
+        {/* <Blogs/> */}
+      </div>
+      <Container style={{width:'100%', height:30, display:'flex', alignItems:'center',  justifyContent:'space-around', backgroundColor:'white', position:'sticky', zIndex:100, bottom:0, marginBottom: 0,boxShadow: "0px 0px 5px #9999"}}>
+        <Typography variant={"subtitle1"} style={{color:"black", fontSize:10, opacity:0.3}}>Powered by Bonsai! </Typography>
+      </Container>
     </div>
   )
 }

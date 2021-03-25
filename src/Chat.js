@@ -18,6 +18,7 @@ var isScrolling;
 export default class Chat extends React.Component{
   constructor(props) {
     super(props);
+    console.log("propsChatT: ", props)
     this.state = {height: 255, yDiff: 0};
   }
   
@@ -46,7 +47,7 @@ export default class Chat extends React.Component{
   render(){
       return(
         <div className="container1">
-              <ChatBanner id="header" height={80} style={{backgroundColor:"black",}} />
+              <ChatBanner id="header" height={80} style={{backgroundColor:this.props.themeColor,}} />
               {/* <ChatContactInfo height={(window.innerHeight - this.state.height - 50) + this.state.yDiff}/> */}
               <ChatSection id={this.props.match.params.id} height={(window.innerHeight - 80)}/>
         </div>

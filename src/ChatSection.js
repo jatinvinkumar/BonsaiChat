@@ -71,6 +71,7 @@ function validate(email) {
 }
 
 var email = "";
+var name = "";
 
 function ChatSection(props){
 
@@ -83,6 +84,8 @@ function ChatSection(props){
   const dispatch = useDispatch();
 
   const [email2, setEmail] = useState("");
+
+  const [name2, setName] = useState("");
 
   const inputChange = (event) => {
     //setInput(event.target.value)
@@ -110,37 +113,81 @@ function ChatSection(props){
     console.log("submit pressed");
     if(validate(email)){
       console.log("email validated");
-      api.setMetaData({email: email});
+      api.setMetaData(props.id, {email: email});
       setEmail(email)
     }
   }
 
+  const handleChangeName = (event) => {
+    //console.log("EVENTLOG: ", event.target.value)
+    name = event.target.value;
+  }
+
+  const handleNameSubmit = () => {
+      api.setMetaData(props.id, {name: name});
+      setName(name);
+      message = "Howdy ";
+      handleSend();
+      addResponseMessage("Howdy " + name)
+      renderCustomComponent(Button2)
+  }
+
+
+
   const Button2 = ({ }) => 
     <div style={{width:'80%',}}>
-      <Utility style={{backgroundColor: "#b3b3b3"}} >
-      <Typography variant={"subtitle1"} style={{color:"black", paddingBottom:10}}><b>Stay in touch</b></Typography>
+      <Utility color={props.data.themeColor} style={{backgroundColor: props.data.themeColor}} >
+      {/* <Typography variant={"subtitle1"} style={{color:"black", paddingBottom:10}}><b>Stay in touch</b></Typography> */}
                 <div style={{display:'flex'}}>
                   <Paper component="form" style={{ boxShadow: "0px 0px 1px #9999", width:'100%', borderTopRightRadius:0, borderBottomRightRadius:0}}>
                     <Input
                       placeholder="Enter Email"
                       inputProps={{ 'aria-label': 'search google maps' }}
+                      disableUnderline={true}
                       onChange={handleChangeEmail}
                       style={{paddingLeft:10, width:'100%', textAnchor:'middle', alignItems:'center', textAlign:'center', paddingTop:5}}
                     />
                   </Paper>
 
-                  <IconButton onClick={handleEmailSubmit} style={{height:'100%', backgroundColor:"black", height:40, width:40, borderRadius:0, borderTopRightRadius:5, borderBottomRightRadius:5}} type="submit" aria-label="search">
+                  <IconButton onClick={handleEmailSubmit} style={{height:'100%', backgroundColor:props.data.themeColor, height:40, width:40, borderRadius:0, borderTopRightRadius:5, borderBottomRightRadius:5}} type="submit" aria-label="search">
                       <ArrowForwardIos style={{color:'white', margin:'auto'}}/>
                   </IconButton>
                 </div>
       </Utility>
     </div>
 
+const Name = ({ }) =>
+  <div style={{width:'80%'}}>
+  <Utility color={props.data.themeColor} style={{backgroundColor: props.data.themeColor}} >
+  {/* <Typography variant={"subtitle1"} style={{color:"black", paddingBottom:10}}><b>Stay in touch</b></Typography> */}
+            <div style={{display:'flex'}}>
+              <Paper component="form" style={{ boxShadow: "0px 0px 1px #9999", width:'100%', borderTopRightRadius:0, borderBottomRightRadius:0}}>
+                <Input
+                  placeholder="Full Name"
+                  inputProps={{ 'aria-label': 'search google maps' }}
+                  disableUnderline={true}
+                  onChange={handleChangeName}
+                  style={{paddingLeft:10, width:'100%', textAnchor:'middle', alignItems:'center', textAlign:'center', paddingTop:5}}
+                />
+              </Paper>
+
+              <IconButton onClick={handleNameSubmit} style={{height:'100%', backgroundColor:props.data.themeColor, height:40, width:40, borderRadius:0, borderTopRightRadius:5, borderBottomRightRadius:5}} type="submit" aria-label="search">
+                  <ArrowForwardIos style={{color:'white', margin:'auto'}}/>
+              </IconButton>
+            </div>
+  </Utility>
+</div>
+
+
   stateData = props.data;
   dropMessages()
   pointer = 0;
   console.log("PropsCC: ", props)
-  if(!props.data.sessionMeta.email){
+  if(!props.data.sessionMeta.name && !props.data.sessionMeta.email){
+    addResponseMessage("Hi! What's your name?")
+    renderCustomComponent(Name)
+  } else if(props.data.sessionMeta.name && !props.data.sessionMeta.email){
+    addResponseMessage("Howdy " + props.data.sessionMeta.name + "! What's your email?")
     renderCustomComponent(Button2)
   } else {
     loopThru(props);
@@ -158,7 +205,6 @@ function ChatSection(props){
           </div>
           <Container style={{  bottom:0, width:"100%", padding:10}}>
               <Container className="shadow" style={{backgroundColor: 'white', borderRadius: 8, padding: 20, boxShadow: '0 0 0 1px rgba(0,0,0,0.01)'}}>
-                
                 <div style={{display:'flex', alignItems:'center', marginTop: 20, }}>
                 <Input id={"userInput"} onChange={inputChange} placeholder="Enter a description to help people find what they need" disableUnderline='true' style={{fontSize: 12, textAlign: "left",}} fullWidth="true" inputProps={{ 'aria-label': 'description', disableUnderline: true }} />
                   {/* <MenuBookTwoTone style={{color: "#3599FF", marginRight: 10}}/> */}
