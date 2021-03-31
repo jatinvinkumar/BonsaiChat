@@ -85,10 +85,12 @@ function ChatSection(props){
 
   const [email2, setEmail] = useState("");
 
+  const [input, setInput] = useState("");
+
   const [name2, setName] = useState("");
 
   const inputChange = (event) => {
-    //setInput(event.target.value)
+    setInput(event.target.value)
     message = event.target.value;
   };
 
@@ -97,6 +99,7 @@ function ChatSection(props){
     addUserMessage(message);
     api.addMessage(pointer, chatID, message)
     message = "";
+    setInput("")
   };
   
   const handleNewUserMessage = (newMessage) => {
@@ -193,7 +196,14 @@ const Name = ({ }) =>
     loopThru(props);
   }
   
-  
+  function keyPress(e){
+    if(e.keyCode == 13){
+       e.preventDefault();
+       console.log('value', e.target.value);
+       handleSend();
+       // put the login here
+    }
+ }
 
   toggleWidget()
     return(
@@ -203,16 +213,16 @@ const Name = ({ }) =>
               handleNewUserMessage={handleNewUserMessage}
             />
           </div>
-          <Container style={{  bottom:0, width:"100%", padding:10}}>
-              <Container className="shadow" style={{backgroundColor: 'white', borderRadius: 8, padding: 20, boxShadow: '0 0 0 1px rgba(0,0,0,0.01)'}}>
-                <div style={{display:'flex', alignItems:'center', marginTop: 20, }}>
-                <Input id={"userInput"} onChange={inputChange} placeholder="Enter a description to help people find what they need" disableUnderline='true' style={{fontSize: 12, textAlign: "left",}} fullWidth="true" inputProps={{ 'aria-label': 'description', disableUnderline: true }} />
+          <Container style={{ backgroundColor: 'white', bottom:0, width:"100%", padding:10, position: 'absolute', }}>
+              <Container className="shadow" style={{backgroundColor: 'white', borderRadius: 8, padding: 10, boxShadow: '0 0px 10px 0 rgba(0, 0, 0, .2)'}}>
+                <div style={{display:'flex', alignItems:'center', }}>
+                <Input id={"userInput"} value={input} onChange={inputChange}  onSubmit={handleSend}  onKeyDown={keyPress} placeholder="Send a message..." disableUnderline='true' multiline={true} style={{fontSize: 12, textAlign: "left"}} fullWidth="true" inputProps={{ 'aria-label': 'description', disableUnderline: true }} />
                   {/* <MenuBookTwoTone style={{color: "#3599FF", marginRight: 10}}/> */}
                   {/* <PostAddTwoTone style={{color: "#3599FF",  marginRight: 10}}/> */}
-                  <EmojiEmotionsTwoTone style={{color: "#3599FF",  marginRight: 10}}/>
+                  {/* <EmojiEmotionsTwoTone style={{color: "#3599FF",  marginRight: 10}}/> */}
                   {/* <Gif style={{color: "#3599FF",  marginRight: 10}}/> */}
                   {/* <InsertPhotoTwoTone style={{color: "#3599FF",  marginRight: 10}}/> */}
-                  <AttachFileTwoTone style={{color: "#3599FF"}}/>
+                  {/* <AttachFileTwoTone style={{color: "#3599FF"}}/> */}
                   <Button variant="primary" onSubmit={handleSend} onClick={handleSend} style={{}}>Send</Button>
                 </div>
               </Container>
